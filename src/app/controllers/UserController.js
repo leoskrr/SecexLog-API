@@ -15,7 +15,7 @@ module.exports = {
     store(req, res) {
         const user = { ...req.body };
         //fazendo a criptografia Hash da senha do usuário
-        user.password = cryptPsw(user.password);
+        if(user.password) user.password = cryptPsw(user.password);
 
         User.create(user)
             .then(_ => res.status(204).send())

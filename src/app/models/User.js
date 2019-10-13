@@ -1,19 +1,53 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('User', {
-        name: DataTypes.STRING,
-        position: DataTypes.STRING,
-        login: DataTypes.STRING,
-        password: DataTypes.STRING,
-    },
-    /*
-      Usando as options do sequelize para não retornar a(s) senha(s) do(s) usuário(s)
-      quando chamado um 'index'/'show'
-    */
-    {
-        defaultScope: {
-            attributes: { exclude: ['password'] },
+  const User = sequelize.define('User', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty(value) {
+          if(!value)
+            throw new Error('O nome do usuário não foi informado');
         }
+      }
+    },
+    login: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty(value) {
+          if(!value)
+            throw new Error('O login do usuário não foi informado');
+        }
+      }
+    },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty(value) {
+          if(!value)
+            throw new Error('O login do usuário não foi informado');
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty(value) {
+          if(!value)
+            throw new Error('A senha do usuário não foi informada');
+        }
+      }
+    }
+  }, {
+      defaultScope: {
+        attributes: { exclude: ['password'] },
+      }
     });
-    
-    return User;
-}
+  User.associate = function (models) {
+    // associations can be defined here
+  };
+  return User;
+};

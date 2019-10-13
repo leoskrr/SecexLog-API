@@ -1,8 +1,8 @@
 module.exports = {
-  username: 'root',
-  password: '',
-  database: 'secex_log',
-  host: '127.0.0.1',
+  username: "root",
+  password: "",
+  database: "secex_log",
+  host: "127.0.0.1",
   dialect: 'mysql',
   define: {
     timestamps: false
