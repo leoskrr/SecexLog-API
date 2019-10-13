@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      nome: {
+      name: {
         allowNull: false,
         type: DataTypes.STRING
       },
@@ -18,11 +18,11 @@ module.exports = {
         type: DataTypes.STRING,
         unique: true
       },
-      cargo: {
+      position: {
         allowNull: false,
         type: DataTypes.STRING
       },
-      senha:{
+      password:{
         allowNull: false,
         type: DataTypes.STRING
       }
