@@ -18,7 +18,7 @@
 
 --> Para requisições de autenticações (como por exemplo login), é de padrão criar uma pasta dentro de src>app chamada "middlewares"
 
---> as variáveis, campo dos bancos e etc estão em inglês, estando somente os comentários em português.
+--> as variáveis, campos dos models e etc estão em inglês, estando somente os comentários em português.
 
 # --
 
