@@ -102,6 +102,8 @@ module.exports = {
                     position: user.position,
                     password: user.password
                 })
+                .then(_ => res.status(204).send())
+                .catch(err => res.status(500).send(err));
             }
         })
         .catch(err => res.status(500).send(err));
