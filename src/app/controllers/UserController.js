@@ -20,6 +20,12 @@ module.exports = {
         if (user.password) user.password = cryptPsw(user.password);
 
         try {
+
+            existsOrError(user.name, "O nome do usuário deve ser informado");
+            existsOrError(user.login, "O login do usuário deve ser informado");
+            existsOrError(user.position, "O cargo do usuário deve ser informado");
+            existsOrError(user.password, "A senha do usuário deve ser informada");
+
             const resultFromDB = await User.findOne({
                 where: {
                     login: user.login
@@ -27,7 +33,7 @@ module.exports = {
             });
             notExistsOrError(resultFromDB, `Já existe um usuário com o login ${user.login}`)
         } catch (msg) {
-            return res.status(400).json({ erro: msg});
+            return res.status(400).json({ erro: msg });
         }
 
         User.create(user)
@@ -71,6 +77,34 @@ module.exports = {
     },
     //Atualiza um usuário
     update(req, res) {
+        const userId = req.params.data;
+        const user = {... req.body }
+        try {
+            existsOrError(user.name, "O nome do usuário deve ser informado");
+            existsOrError(user.login, "O login do usuário deve ser informado");
+            existsOrError(user.position, "O cargo do usuário deve ser informado");
+            existsOrError(user.password, "A senha do usuário deve ser informada");
+
+        } catch (msg) {
+            return res.status(400).json({ erro: msg });
+        }
+
+        User.findOne({
+            where: {
+                id: userId
+            }
+        }).then(resultFromDB => {
+            if(resultFromDB)
+            {
+                resultFromDB.update({
+                    name: user.name,
+                    login: user.login,
+                    position: user.position,
+                    password: user.password
+                })
+            }
+        })
+        .catch(err => res.status(500).send(err));
 
     },
     //Deleta um usuário
