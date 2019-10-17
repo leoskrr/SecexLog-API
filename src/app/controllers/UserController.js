@@ -4,7 +4,7 @@ const { User } = require('../models');
 const { cryptPsw } = require('../utils/ProcessPassword');
 const { existsOrError, notExistsOrError } = require('../utils/validation');
 
-const Op = Sequelize.Op;
+const Operator = Sequelize.Op;
 
 module.exports = {
     //Mostra todos os usuários
@@ -67,7 +67,8 @@ module.exports = {
         else {
             User.findAll({
                 where: {
-                    name: { [Op.like]: `%${userData}%` }
+                    //Usando as operações do Sequelize para fazer consulta do tipo 'like'
+                    name: { [Operator.like]: `%${userData}%` }
                 }
             })
                 .then(users => res.json(users))
@@ -100,7 +101,7 @@ module.exports = {
                     name: user.name,
                     login: user.login,
                     position: user.position,
-                    password: user.password
+                    password: cryptPsw(user.password)
                 })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err));
