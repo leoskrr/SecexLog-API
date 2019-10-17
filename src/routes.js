@@ -1,4 +1,6 @@
 const UserController = require('./app/controllers/UserController');
+const OpinionController = require('./app/controllers/OpinionController');
+
 
 module.exports = app => {
 
@@ -13,4 +15,15 @@ module.exports = app => {
        .put(UserController.update)
        .delete(UserController.delete);
     
+   /* ROTAS DE OPINIÕES */
+
+   app.route('/opinions')
+      .get(OpinionController.index)
+      .post(OpinionController.store)
+   
+   app.route('/opinions/:id')
+      .get(OpinionController.show)
+      .put(OpinionController.update)
+      .delete(OpinionController.delete)
+
 }
