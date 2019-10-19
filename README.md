@@ -23,10 +23,12 @@ OBS: É NECESSÁRIO TER UM MODEL E MIGRATION CRIADOS PARA RODAS OS COMANDOS (a c
    OBS: O then é chamado caso a operação tenha sucesso, o mesmo retorna um array (resultados). O catch é chamado caso de erro e retornará o erro que foi achado
    
 --> create(): insere um elemento em um certo model;
-  ``Nome_Do_Model.create({ coluna1: parametro1, coluna2: parametro2, ... })
+  ```
+  Nome_Do_Model.create({ coluna1: parametro1, coluna2: parametro2, ... })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err));``
-
+            .catch(err => res.status(500).send(err));
+   ```
+   
 --> findOne(): retorna um registro do model especificado pela cláusula 'where'
   ```
   Nome_Do_Model.findOne({
