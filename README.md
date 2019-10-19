@@ -10,35 +10,35 @@
 
 --> LEMBRANDO: Para rodar comandos do Sequelize (e somente dele) é necessário entrar na pasta src 
 
-- 2. Comandos úteis de CRUD do Sequelize
+- 2.Comandos úteis de CRUD do Sequelize
 
 OBS: É NECESSÁRIO TER UM MODEL E MIGRATION CRIADOS PARA RODAS OS COMANDOS (a criação desses itens foi mostrada no tópico 1)
 
 --> findAll(): retorna todos os registros de um model (tabela do banco de dados); 
-  Nome_Do_Model.findAll()
+  ``Nome_Do_Model.findAll()
             .then(resultados => res.json(resultados)) 
-            .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).send(err));``
    OBS: O then é chamado caso a operação tenha sucesso, o mesmo retorna um array (resultados). O catch é chamado caso de erro e retornará o erro que foi achado
    
 --> create(): insere um elemento em um certo model;
-  Nome_Do_Model.create({ coluna1: parametro1, coluna2: parametro2, ... })
+  ``Nome_Do_Model.create({ coluna1: parametro1, coluna2: parametro2, ... })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).send(err));``
 
 --> findOne(): retorna um registro do model especificado pela cláusula 'where'
-  Nome_Do_Model.findOne({
+  ``Nome_Do_Model.findOne({
                 where: {
                     coluna: valor_para_procurar
                 }
             })
                 .then(resultado => res.json(resultado))
-                .catch(err => res.status(500).send(err));
+                .catch(err => res.status(500).send(err));``
   
   OBS: é recomendável, ao usar esse comando, procurar um usuário pelo ID.
  
  -->  update(): atualizar um registro específico;
  
-  Nome_Do_Model.findOne({
+  ``Nome_Do_Model.findOne({
             where: {
                 id: id_do_registro
             }
@@ -54,15 +54,15 @@ OBS: É NECESSÁRIO TER UM MODEL E MIGRATION CRIADOS PARA RODAS OS COMANDOS (a c
                 .catch(err => res.status(500).send(err));
             }
         })
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send(err));``
  
  --> destroy(): deleta um certo registro;
  
-  Nome_Do_Model.destroy({
+  ``Nome_Do_Model.destroy({
             where: { id: id_do_registro }
         })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).send(err));``
  
 # --
 
