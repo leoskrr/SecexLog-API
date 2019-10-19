@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Opinion = sequelize.define('Opinion', {
-    title: {
+    titulo: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -23,7 +23,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, {
+    
+      defaultScope: {
+        attributes: { exclude: ['createdAt','updatedAt'] },
+      }
+  });
   Opinion.associate = function(models) {
     // associations can be defined here
   };

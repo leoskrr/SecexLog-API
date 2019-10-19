@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
       defaultScope: {
-        attributes: { exclude: ['senha'] },
+        attributes: { exclude: ['senha', 'createdAt','updatedAt'] },
       }
     });
   User.associate = function (models) {
