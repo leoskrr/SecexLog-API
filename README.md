@@ -42,7 +42,8 @@ OBS: É NECESSÁRIO TER UM MODEL E MIGRATION CRIADOS PARA RODAS OS COMANDOS (a c
  
  -->  update(): atualizar um registro específico;
  
-  ``Nome_Do_Model.findOne({
+  ```
+  Nome_Do_Model.findOne({
             where: {
                 id: id_do_registro
             }
@@ -58,15 +59,17 @@ OBS: É NECESSÁRIO TER UM MODEL E MIGRATION CRIADOS PARA RODAS OS COMANDOS (a c
                 .catch(err => res.status(500).send(err));
             }
         })
-        .catch(err => res.status(500).send(err));``
- 
+        .catch(err => res.status(500).send(err));  
+   ```
  --> destroy(): deleta um certo registro;
  
-  ``Nome_Do_Model.destroy({
+ ```
+  Nome_Do_Model.destroy({
             where: { id: id_do_registro }
         })
             .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err));``
+            .catch(err => res.status(500).send(err));
+  ```
  
 # --
 
