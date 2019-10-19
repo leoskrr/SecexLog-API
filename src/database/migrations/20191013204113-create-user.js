@@ -8,16 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      nome: {
         type: Sequelize.STRING,
       },
       login: {
         type: Sequelize.STRING
       },
-      position: {
+      cargo: {
         type: Sequelize.STRING
       },
-      password: {
+      senha: {
+        type: Sequelize.STRING
+      },
+      email:{
         type: Sequelize.STRING
       },
       createdAt: {
@@ -29,8 +32,13 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    
+
   },
+
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users');
+    
   }
+
 };

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    name: {
+    nome: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -21,7 +21,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    position: {
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty(value) {
+          if(!value)
+            throw new Error('O email do usuário não foi informado');
+        },
+        isEmail: true
+      }
+    },
+    cargo: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -31,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    password: {
+    senha: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -43,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
       defaultScope: {
-        attributes: { exclude: ['password'] },
+        attributes: { exclude: ['senha'] },
       }
     });
   User.associate = function (models) {

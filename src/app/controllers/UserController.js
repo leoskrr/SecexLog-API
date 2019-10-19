@@ -4,41 +4,50 @@ const { User } = require('../models');
 const { cryptPsw } = require('../utils/ProcessPassword');
 const { existsOrError, notExistsOrError } = require('../utils/validation');
 
-const Op = Sequelize.Op;
+const Operation = Sequelize.Op;
 
 module.exports = {
     //Mostra todos os usuários
     index(req, res) {
         User.findAll()
-            .then(users => res.json(users))
+            .then(usuarios => res.json(usuarios))
             .catch(err => res.status(500).send(err));
     },
     //Salva um usuário
     async store(req, res) {
-        const user = { ...req.body };
-        //fazendo a criptografia Hash da senha do usuário
-        if (user.password) user.password = cryptPsw(user.password);
+        const usuario = { ...req.body };
 
         try {
+            existsOrError(usuario.nome, "O nome do usuário deve ser informado");
+            existsOrError(usuario.login, "O login do usuário deve ser informado");
+            existsOrError(usuario.email, "O email do usuário deve ser informado");
+            existsOrError(usuario.cargo, "O cargo do usuário deve ser informado");
+            existsOrError(usuario.senha, "A senha do usuário deve ser informada");
 
-            existsOrError(user.name, "O nome do usuário deve ser informado");
-            existsOrError(user.login, "O login do usuário deve ser informado");
-            existsOrError(user.position, "O cargo do usuário deve ser informado");
-            existsOrError(user.password, "A senha do usuário deve ser informada");
-
-            const resultFromDB = await User.findOne({
-                where: {
-                    login: user.login
-                }
+            let resultFromDB = await User.findOne({
+                where: { login: usuario.login }
             });
-            notExistsOrError(resultFromDB, `Já existe um usuário com o login ${user.login}`)
+
+            notExistsOrError(resultFromDB, `Já existe um usuário com o login ${usuario.login}`);
+
+            resultFromDB = await User.findOne({
+                where: { email: usuario.email }
+            });
+
+            notExistsOrError(resultFromDB, `Já existe um usuário com o email ${usuario.email}`);
+
         } catch (msg) {
-            return res.status(400).json({ erro: msg });
+            return res.status(400).send(msg);
         }
 
-        User.create(user)
+        //fazendo a criptografia Hash da senha do usuário
+        usuario.senha = cryptPsw(usuario.senha);
+
+        User.create(usuario)
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err));
+
+
     },
     //Mostrar usuário(s) resultante(s) da pesquisa por id ou por nome
     async show(req, res) {
@@ -61,32 +70,45 @@ module.exports = {
                     id: userData
                 }
             })
-                .then(user => res.json(user))
+                .then(usuario => res.json(usuario))
                 .catch(err => res.status(500).send(err));
         }
         else {
             User.findAll({
                 where: {
-                    name: { [Op.like]: `%${userData}%` }
+                    name: { [Operation.like]: `%${userData}%` }
                 }
             })
-                .then(users => res.json(users))
+                .then(usuarios => res.json(usuarios))
                 .catch(err => res.status(500).send(err));
         }
 
     },
     //Atualiza um usuário
-    update(req, res) {
+    async update(req, res) {
         const userId = req.params.data;
-        const user = {... req.body }
+        const usuario = { ...req.body }
         try {
-            existsOrError(user.name, "O nome do usuário deve ser informado");
-            existsOrError(user.login, "O login do usuário deve ser informado");
-            existsOrError(user.position, "O cargo do usuário deve ser informado");
-            existsOrError(user.password, "A senha do usuário deve ser informada");
+            existsOrError(usuario.nome, "O nome do usuário deve ser informado");
+            existsOrError(usuario.login, "O login do usuário deve ser informado");
+            existsOrError(usuario.email, "O email do usuário deve ser informado");
+            existsOrError(usuario.cargo, "O cargo do usuário deve ser informado");
+            existsOrError(usuario.senha, "A senha do usuário deve ser informada");
+
+            let resultFromDB = await User.findOne({
+                where: { login: usuario.login }
+            });
+
+            notExistsOrError(resultFromDB, `Já existe um usuário com o login ${usuario.login}`);
+
+            resultFromDB = await User.findOne({
+                where: { email: usuario.email }
+            });
+
+            notExistsOrError(resultFromDB, `Já existe um usuário com o email ${usuario.email}`);
 
         } catch (msg) {
-            return res.status(400).json({ erro: msg });
+            return res.status(400).send(msg);
         }
 
         User.findOne({
@@ -94,19 +116,16 @@ module.exports = {
                 id: userId
             }
         }).then(resultFromDB => {
-            if(resultFromDB)
-            {
+            if (resultFromDB) {
                 resultFromDB.update({
-                    name: user.name,
-                    login: user.login,
-                    position: user.position,
-                    password: user.password
+                    ...usuario,
+                    senha: cryptPsw(usuario.senha)
                 })
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err));
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err));
             }
         })
-        .catch(err => res.status(500).send(err));
+            .catch(err => res.status(500).send(err));
 
     },
     //Deleta um usuário
@@ -123,7 +142,7 @@ module.exports = {
             existsOrError(resultFromDB, "Não foi encontrado um usuário com o ID informado");
 
         } catch (msg) {
-            return res.status(400).json({ erro: msg });
+            return res.status(400).send(msg);
         }
 
         User.destroy({
