@@ -1,0 +1,9 @@
+module.exports = {
+    authSecret: '5319c60b844aff21ebc18a6ebbd7bf7d',
+    db:{
+        username: "root",
+        password: "",
+        database: "secex_log",
+        host: "127.0.0.1",
+    }
+}
