@@ -99,13 +99,15 @@ module.exports = {
                 where: { login: usuario.login }
             });
 
-            notExistsOrError(resultFromDB, `Já existe um usuário com o login ${usuario.login}`);
+            if(resultFromDB.login !== usuario.login)
+                notExistsOrError(resultFromDB, `Já existe um usuário com o login ${usuario.login}`);
 
             resultFromDB = await User.findOne({
                 where: { email: usuario.email }
             });
 
-            notExistsOrError(resultFromDB, `Já existe um usuário com o email ${usuario.email}`);
+            if(resultFromDB.email !== usuario.email)
+                notExistsOrError(resultFromDB, `Já existe um usuário com o email ${usuario.email}`);
 
         } catch (msg) {
             return res.status(400).send(msg);

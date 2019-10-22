@@ -16,5 +16,9 @@ function uncryptPsw(typedpass, password) {
   return bcrypt.compareSync(typedpass, password)
 
 }
-
-module.exports = { cryptPsw, uncryptPsw }
+/*Gera uma senha aleatória para a recuperação de senha do usuário */
+function generatePassword() {
+  //O slice fará pegar somente os últimos 10 caracteres do resultado em base36
+  return Math.random().toString(36).slice(-10);
+}
+module.exports = { cryptPsw, uncryptPsw, generatePassword }

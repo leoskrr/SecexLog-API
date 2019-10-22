@@ -1,7 +1,8 @@
 /* CONTROLLERS */
+const LoginController = require('./app/controllers/auth/LoginController');
+const ForgotPassword = require('./app/controllers/auth/ForgotPassword');
 const UserController = require('./app/controllers/UserController');
 const OpinionController = require('./app/controllers/OpinionController');
-const LoginController = require('./app/controllers/auth/LoginController');
 
 /* MIDDLEWARES */
 const UserAuthentication = require('./app/middlewares/UserAuthentication');
@@ -10,11 +11,12 @@ const authAdmin = require('./app/middlewares/AdminAuthentication');
 const AuthUser = UserAuthentication();
 
 module.exports = app => {
-   /* ROTAS DE LOGIN */
+   /* ROTAS DE AUTENTICAÇÃO DE USUÁRIO */
 
-   app.post('/login', LoginController.signIn)
+   app.post('/login', LoginController.signIn);
    app.post('/validateToken', LoginController.validateToken);
-
+   app.post('/forgot_password', ForgotPassword.recoverPass);
+   
    /* ROTAS DE USUÁRIOS */
 
    app.route('/users')
