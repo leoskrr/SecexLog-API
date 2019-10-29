@@ -9,7 +9,7 @@ const Operation = Sequelize.Op;
 
 module.exports = {
 
-    //Show all users
+    //Show all cities
     Index(req, res){
         City.findAll()
             .then(cities => res.json(cities))
@@ -80,7 +80,7 @@ module.exports = {
             });
         
             if(resultFromDB.name !== city.name)
-                 notExistsOrError(resultFromDB, `Já existe um usuário com o login ${city.name}`);
+                 notExistsOrError(resultFromDB, `Já existe uma cidade cadastrada com o nome ${city.name}`);
     
         } catch (error) {
             return res.status().send(err);
@@ -114,7 +114,7 @@ module.exports = {
                 }
             })
 
-            existsOrError(resultFromDB, "Não foi encontrado uma cidade com o ID informado");
+            existsOrError(resultFromDB, "Não foi encontrada uma cidade com o ID informado");
 
 
         } catch (error) {
