@@ -34,19 +34,16 @@ module.exports = {
             let resultFromDb = await City.findOne({
                 where: {name = city.name}
             });
-            notExistsOrError(resultFromDB, `Já existe uma cidade com o nome ${city.name}`);
+            notExistsOrError(resultFromDB, `Já existe uma cidade cadastrada com o nome ${city.name}`);
 
             City.create()
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err));
 
         } catch (error) {
-            return res.status().send(err);
+            return res.status().send(error);
         }
     },
-
-
-
 
     async show(req, res){
             let checkId = false;
@@ -71,10 +68,6 @@ module.exports = {
                     .catch(err => res.status(500).send(err));
             }
     },
-
-
-
-
 
     //Updating a city status
     async update(req, res){

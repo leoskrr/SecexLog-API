@@ -82,28 +82,28 @@ module.exports = {
             existsOrError(path.embarque, "A cidade embarque deve ser informada");
             existsOrError(path.desembarque, "A cidade desembarque deve ser informada");
             existsOrError(path.telefone, "O telefone do usuário deve ser informado");
-            existsOrError(path.email, "A email do usuário deve ser informada");
-            existsOrError(path.modal, "A modal da viagem deve ser informada");
+            existsOrError(path.email, "O email do usuário deve ser informado");
+            existsOrError(path.modal, "O modal da viagem deve ser informado");
             
-            let resultFromDB = await User.findOne({
-                where: { initCidade: path.initCidade }
-            });
+            // let resultFromDB = await Path.findOne({
+            //     where: { initCidade: path.initCidade }
+            // });
 
-            if(resultFromDB.initCidade !== path.initCidade)
-                notExistsOrError(resultFromDB, `Já existe uma cidade com o nome ${path.initCidade}`);
+            // if(resultFromDB.initCidade !== path.initCidade)
+            //     notExistsOrError(resultFromDB, `Já existe uma cidade com o nome ${path.initCidade}`);
 
-            resultFromDB = await User.findOne({
-                where: { endCidade: path.endCidade }
-            });
+            // resultFromDB = await Path.findOne({
+            //     where: { endCidade: path.endCidade }
+            // });
 
-            if(resultFromDB.endCidade !== path.endCidade)
-                notExistsOrError(resultFromDB, `Já existe um usuário com o email ${path.endCidade}`);
+            // if(resultFromDB.endCidade !== path.endCidade)
+            //     notExistsOrError(resultFromDB, `${path.endCidade}`);
 
         } catch (msg) {
             return res.status(400).send(msg);
         }
 
-        User.findOne({
+        Path.findOne({
             where: {
                 id: pathId
             }
