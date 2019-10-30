@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const { Provider } = require('../models');
 
 module.exports = {
-    async storeOrShow(provedor){
+    async storeOrShow(req,res){
         const provedor = { ...req.body };
         const resultFromDB = await Provider.findOne({
             where: {
