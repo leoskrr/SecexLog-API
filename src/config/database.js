@@ -1,4 +1,4 @@
-const { db } = require('../.env');
+const { db } = require('../env');
 
 module.exports = {
   ...db,

@@ -133,8 +133,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   Path.associate = function(models) {
     // associations can be defined here
-    Path.hasMany(City);
-    Path.hasOne(Provider);
+    // Path.hasMany(City);
+    // Path.hasOne(Provider);
   };
   return Path;
 };

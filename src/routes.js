@@ -40,16 +40,27 @@ module.exports = app => {
 
    /* ROTAS DE CIDADE */
 
+   // app.route('/cities')
+   //    .all(AuthUser.authenticate())
+   //    .get(authAdmin(CityController.index))
+   //    .post(authAdmin(CityController.store));
+
+   // app.route('/cities/:data')
+   //    .all(AuthUser.authenticate())
+   //    .get(CityController.show)
+   //    .post(authAdmin(CityController.update))
+   //    .delete(authAdmin(CityController.delete));
+
    app.route('/cities')
-      .all(AuthUser.authenticate())
-      .get(authAdmin(CityController.index))
-      .post(authAdmin(CityController.store));
+      // .all(AuthUser.authenticate())
+      .get(CityController.index)
+      .post(CityController.store);
 
    app.route('/cities/:data')
-      .all(AuthUser.authenticate())
-      .get(authAdmin(CityController.show))
-      .post(authAdmin(CityController.update))
-      .delete(authAdmin(CityController.delete));
+      // .all(AuthUser.authenticate())
+      .get(CityController.show)
+      .put(CityController.update)
+      .delete(CityController.delete);
 
    /* ROTA DE PROVEDORES */
 
@@ -60,16 +71,27 @@ module.exports = app => {
 
    /* ROTAS DE TRAJETO*/
 
+   // app.route('/paths')
+   //    .all(AuthUser.authenticate())
+   //    .get(PathController.index)
+   //    .post(authAdmin(CityController.store));
+      
+   // app.route('/paths/:data')
+   //    .all(AuthUser.authenticate())
+   //    .get(PathController.show)
+   //    .post(authAdmin(PathController.update))
+   //    .delete(authAdmin(PathController.delete));
+
    app.route('/paths')
-      .all(AuthUser.authenticate())
+      //.all(AuthUser.authenticate())
       .get(PathController.index)
-      .post(authAdmin(CityController.store));
+      .post(PathController.store);
       
    app.route('/paths/:data')
-      .all(AuthUser.authenticate())
+      //.all(AuthUser.authenticate())
       .get(PathController.show)
-      .post(authAdmin(PathController.update))
-      .delete(authAdmin(PathController.delete));
+      .post(PathController.update)
+      .delete(PathController.delete);
 
    /* ROTAS DE OPINIÕES */
 
