@@ -24,13 +24,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       hora: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       duration: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       valor: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DOUBLE
+      },
+      quilometragem: {
+        type: Sequelize.DOUBLE
       },
       embarque: {
         type: Sequelize.STRING

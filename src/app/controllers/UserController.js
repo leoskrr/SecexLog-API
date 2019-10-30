@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { User } = require('../models/User');
+const { User } = require('../models');
 const { cryptPsw } = require('../utils/ProcessPassword');
 const { existsOrError, notExistsOrError } = require('../utils/validation');
 

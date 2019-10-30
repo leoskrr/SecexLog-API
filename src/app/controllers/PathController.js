@@ -3,16 +3,18 @@ const Sequelize = require('sequelize');
 const { Path } = require('../models');
 const { existsOrError, notExistsOrError } = require('../utils/validation');
 
+const Operation = Sequelize.Op;
+
 
 module.exports = {
 
-    Index(req, res){
+    index(req, res) {
         Path.findAll()
-        .then(paths => res.json(paths))
-        .catch(err => res.status(500).send(err));
+            .then(paths => res.json(paths))
+            .catch(err => res.status(500).send(err));
     },
 
-    async store(req, res){
+    async store(req, res) {
         try {
 
             const path = { ...req.body };
@@ -24,15 +26,15 @@ module.exports = {
             existsOrError(path.duration, "A duração do percurso deve ser informada");
             existsOrError(path.quilometragem, "A quilometragem deve ser informada");
             existsOrError(path.valor, "O valor da viagem deve ser informado");
-            existsOrError(path.embarque, "A cidade embarque deve ser informada");
-            existsOrError(path.desembarque, "A cidade desembarque deve ser informada");
-            existsOrError(path.telefone, "O telefone do usuário deve ser informado");
-            existsOrError(path.email, "A email do usuário deve ser informada");
-            existsOrError(path.modal, "A modal da viagem deve ser informada");
+            existsOrError(path.embarque, "O lugar de embarque deve ser informado");
+            existsOrError(path.desembarque, "O lugar de desembarque deve ser informado");
+            existsOrError(path.telefone, "O telefone do provedor deve ser informado");
+            existsOrError(path.email, "O email do provedor deve ser informado");
+            existsOrError(path.modal, "O modal da viagem deve ser informada");
 
 
             Path.create()
-                .then(_ => res.status(204).send() )
+                .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err));
 
 
@@ -42,18 +44,20 @@ module.exports = {
     },
 
 
-    async show(req, res){
+    async show(req, res) {
         let checkId = false;
         const pathData = req.params.data;
 
-        if(!isNaN(pathData)) checkId = true;
+        if (!isNaN(pathData)) checkId = true;
 
-        if(checkId){
+        if (checkId) {
             Path.findOne({
-                where: {name : pathData}
+                where: {
+                    id: pathData
+                }
             })
-            .then(path => res.json(path))
-            .catch(err => res.status(500).send(err));
+                .then(path => res.json(path))
+                .catch(err => res.status(500).send(err));
         }
         else {
             Path.findAll({
@@ -61,12 +65,12 @@ module.exports = {
                     name: { [Operation.like]: `%${pathData}%` }
                 }
             })
-                .then(cities => res.json(cities))
+                .then(paths => res.json(paths))
                 .catch(err => res.status(500).send(err));
         }
     },
 
-    async update(req, res){
+    async update(req, res) {
         const pathId = req.params.data;
         const path = { ...req.body }
 
@@ -84,7 +88,7 @@ module.exports = {
             existsOrError(path.telefone, "O telefone do usuário deve ser informado");
             existsOrError(path.email, "O email do usuário deve ser informado");
             existsOrError(path.modal, "O modal da viagem deve ser informado");
-            
+
             // let resultFromDB = await Path.findOne({
             //     where: { initCidade: path.initCidade }
             // });
@@ -120,7 +124,7 @@ module.exports = {
 
     },
 
-    async delete(req, res){
+    async delete(req, res) {
         const pathId = req.params.data;
 
         try {

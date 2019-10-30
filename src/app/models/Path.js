@@ -1,102 +1,130 @@
+const City = require('./City');
+const Provider = require('./Provider');
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Path = sequelize.define('Path', {
     initCidade: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome da cidade inicial não foi informado');
-        }
+      references: {
+        model: 'cities',
+        key:'nome'
       }
+      // validate: {
+      //   notEmpty(value) {
+      //     if(!value)
+      //       throw new Error('O nome da cidade inicial não foi informado');
+      //   }
+      // }
     },
     endCidade: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome da cidade final não foi informado');
-        }
-    }
+      references: {
+        model: 'cities',
+        key: 'nome'
+      }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O nome da cidade final não foi informado');
+    //     }
+    // }
   },
     modalTipo: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O tipo modal não foi informado');
-        }
-    }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O tipo modal não foi informado');
+    //     }
+    // }
     },
     prestNome: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome do prestador não foi informado');
-        }
-    }
+      references: {
+        model: 'providers',
+        key: 'nome'
+      }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O nome do prestador não foi informado');
+    //     }
+    // }
     },
     dia: {
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
     
     },
     hora:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       
     },
     duration: {
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('A duração não foi informada');
-        }
-    }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('A duração não foi informada');
+    //     }
+    // }
     },
     valor: {
-      type:DataTypes.INTEGER
+      type:DataTypes.DOUBLE
+    },
+    quilometragem: {
+      type: DataTypes.DOUBLE
     },
     embarque: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome da cidade embarque não foi informado');
-        }
-    }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O nome da cidade embarque não foi informado');
+    //     }
+    // }
     },
     desembarque: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome da cidade desembarque não foi informado');
-        }
-    }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O nome da cidade desembarque não foi informado');
+    //     }
+    // }
     },
     telefone: {
-      type:DataTypes.STRING
+      type:DataTypes.STRING,
+      references: {
+        model: 'provider',
+        key: 'telefone'
+      }
     },
     email: {
-      type:DataTypes.STRING
+      type:DataTypes.STRING,
+      references: {
+        model: 'provider',
+        key: 'email'
+      },
+      validate: {
+        isEmail: true
+      }
     },
     modal: {
       type:DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O modal não foi informado');
-        }
-    }
+    //   validate: {
+    //     notEmpty(value) {
+    //       if(!value)
+    //         throw new Error('O modal não foi informado');
+    //     }
+    // }
     },
   }, {
     defaultScope: {
@@ -105,6 +133,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   Path.associate = function(models) {
     // associations can be defined here
+    Path.hasMany(City);
+    Path.hasOne(Provider);
   };
   return Path;
 };

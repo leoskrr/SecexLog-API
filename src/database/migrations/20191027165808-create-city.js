@@ -29,6 +29,15 @@ module.exports = {
       endDataCheia: {
         type: Sequelize.STRING
       },
+      interdicaoTrecho:{
+        type: Sequelize.BOOLEAN
+      },
+      obsInterdicao: {
+        type: Sequelize.TEXT
+      },
+      obsCidade: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

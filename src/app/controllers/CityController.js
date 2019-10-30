@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { City } = require('../models/city');
+const { City } = require('../models');
 const { existsOrError, notExistsOrError } = require('../utils/validation');
 
 
@@ -10,7 +10,7 @@ const Operation = Sequelize.Op;
 module.exports = {
 
     //Show all cities
-    Index(req, res){
+    index(req, res){
         City.findAll()
             .then(cities => res.json(cities))
             .catch(err => res.status(500).send(err));
@@ -23,12 +23,12 @@ module.exports = {
             const city = { ...req.body };
 
             existsOrError(city.name, "O nome da cidade deve ser informado");
-            existsOrError(city.cBase, "Por favor informe se é uma cidade vase");
-            existsOrError(city.cAuditada, "Por favor informe se é uma cidade auditada");
-            existsOrError(city.initDataFeriado, "Por favor informe a data inicial do feriado");
-            existsOrError(city.endDataFeriado, "Por favor informe a data final do feriado");
-            existsOrError(city.initDataCheia, "Por favor informe a data inicial da cheia");
-            existsOrError(city.endDataCheia, "Por favor informe a data final da cheia");
+            // existsOrError(city.cBase, "Por favor informe se é uma cidade vase");
+            // existsOrError(city.cAuditada, "Por favor informe se é uma cidade auditada");
+            // existsOrError(city.initDataFeriado, "Por favor informe a data inicial do feriado");
+            // existsOrError(city.endDataFeriado, "Por favor informe a data final do feriado");
+            // existsOrError(city.initDataCheia, "Por favor informe a data inicial da cheia");
+            // existsOrError(city.endDataCheia, "Por favor informe a data final da cheia");
 
 
             let resultFromDb = await City.findOne({

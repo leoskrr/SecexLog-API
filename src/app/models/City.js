@@ -4,18 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     nome:{
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty(value) {
-          if(!value)
-            throw new Error('O nome da cidade inicial não foi informado');
-        }
-      }
     },
     cBase:{
-      type:DataTypes.STRING
+      type:DataTypes.BOOLEAN
     },
     cAuditada: {
-      type:DataTypes.STRING
+      type:DataTypes.BOOLEAN
     },
     initDataFeriado: {
       type:DataTypes.STRING

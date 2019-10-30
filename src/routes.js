@@ -5,17 +5,18 @@ const UserController = require('./app/controllers/UserController');
 const OpinionController = require('./app/controllers/OpinionController');
 const CityController = require('./app/controllers/CityController');
 const PathController = require('./app/controllers/PathController');
+const ProviderController = require('./app/controllers/ProviderController');
 
 /* MIDDLEWARES */
 const UserAuthentication = require('./app/middlewares/UserAuthentication');
-const CityAuthentication = require('./app/middlewares/CityAuthentication');
-const PathAuthentication = require('./app/middlewares/PathAuthentication');
+// const CityAuthentication = require('./app/middlewares/CityAuthentication');
+// const PathAuthentication = require('./app/middlewares/PathAuthentication');
 const authAdmin = require('./app/middlewares/AdminAuthentication');
 
 
-const AuthPath = PathAuthentication();
+// const AuthPath = PathAuthentication();
 const AuthUser = UserAuthentication();
-const AuthCity = CityAuthentication();
+// const AuthCity = CityAuthentication();
 
 module.exports = app => {
    /* ROTAS DE AUTENTICAÇÃO DE USUÁRIO */
@@ -37,31 +38,36 @@ module.exports = app => {
       .put(authAdmin(UserController.update))
       .delete(authAdmin(UserController.delete));
 
-
-
    /* ROTAS DE CIDADE */
 
-   app.route('cities')
-      .all(AuthCity.authenticate())
+   app.route('/cities')
+      .all(AuthUser.authenticate())
       .get(authAdmin(CityController.index))
       .post(authAdmin(CityController.store));
 
-   app.route('cities/:data')
-      .all(AuthCity.authenticate())
+   app.route('/cities/:data')
+      .all(AuthUser.authenticate())
       .get(authAdmin(CityController.show))
       .post(authAdmin(CityController.update))
       .delete(authAdmin(CityController.delete));
 
+   /* ROTA DE PROVEDORES */
+
+   app.route('/providers')
+      .all(AuthUser.authenticate())
+      .get(ProviderController.storeOrShow)
+      .post(ProviderController.storeOrShow)
+
    /* ROTAS DE TRAJETO*/
 
-   app.route('paths')
-      .all(AuthPath.authenticate())
-      .get(authAdmin(PathController.index))
+   app.route('/paths')
+      .all(AuthUser.authenticate())
+      .get(PathController.index)
       .post(authAdmin(CityController.store));
       
-   app.route('paths/:data')
-      .all(AuthPath.authenticate())
-      .get(authAdmin(PathController.show))
+   app.route('/paths/:data')
+      .all(AuthUser.authenticate())
+      .get(PathController.show)
       .post(authAdmin(PathController.update))
       .delete(authAdmin(PathController.delete));
 
