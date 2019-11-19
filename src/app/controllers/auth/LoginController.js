@@ -77,7 +77,10 @@ module.exports = {
 
             **/
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/path_city
         res.send(false);
     }
 

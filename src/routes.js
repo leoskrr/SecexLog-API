@@ -3,12 +3,29 @@ const LoginController = require('./app/controllers/auth/LoginController');
 const ForgotPassword = require('./app/controllers/auth/ForgotPassword');
 const UserController = require('./app/controllers/UserController');
 const OpinionController = require('./app/controllers/OpinionController');
+<<<<<<< HEAD
 
 /* MIDDLEWARES */
 const UserAuthentication = require('./app/middlewares/UserAuthentication');
 const authAdmin = require('./app/middlewares/AdminAuthentication');
 
 const AuthUser = UserAuthentication();
+=======
+const CityController = require('./app/controllers/CityController');
+const PathController = require('./app/controllers/PathController');
+const ProviderController = require('./app/controllers/ProviderController');
+
+/* MIDDLEWARES */
+const UserAuthentication = require('./app/middlewares/UserAuthentication');
+// const CityAuthentication = require('./app/middlewares/CityAuthentication');
+// const PathAuthentication = require('./app/middlewares/PathAuthentication');
+const authAdmin = require('./app/middlewares/AdminAuthentication');
+
+
+// const AuthPath = PathAuthentication();
+const AuthUser = UserAuthentication();
+// const AuthCity = CityAuthentication();
+>>>>>>> origin/path_city
 
 module.exports = app => {
    /* ROTAS DE AUTENTICAÇÃO DE USUÁRIO */
@@ -30,6 +47,64 @@ module.exports = app => {
       .put(authAdmin(UserController.update))
       .delete(authAdmin(UserController.delete));
 
+<<<<<<< HEAD
+=======
+   /* ROTAS DE CIDADE */
+
+   // app.route('/cities')
+   //    .all(AuthUser.authenticate())
+   //    .get(authAdmin(CityController.index))
+   //    .post(authAdmin(CityController.store));
+
+   // app.route('/cities/:data')
+   //    .all(AuthUser.authenticate())
+   //    .get(CityController.show)
+   //    .post(authAdmin(CityController.update))
+   //    .delete(authAdmin(CityController.delete));
+
+   app.route('/cities')
+      // .all(AuthUser.authenticate())
+      .get(CityController.index)
+      .post(CityController.store);
+
+   app.route('/cities/:data')
+      // .all(AuthUser.authenticate())
+      .get(CityController.show)
+      .put(CityController.update)
+      .delete(CityController.delete);
+
+   /* ROTA DE PROVEDORES */
+
+   app.route('/providers')
+      .all(AuthUser.authenticate())
+      .get(ProviderController.storeOrShow)
+      .post(ProviderController.storeOrShow)
+
+   /* ROTAS DE TRAJETO*/
+
+   // app.route('/paths')
+   //    .all(AuthUser.authenticate())
+   //    .get(PathController.index)
+   //    .post(authAdmin(CityController.store));
+      
+   // app.route('/paths/:data')
+   //    .all(AuthUser.authenticate())
+   //    .get(PathController.show)
+   //    .post(authAdmin(PathController.update))
+   //    .delete(authAdmin(PathController.delete));
+
+   app.route('/paths')
+      //.all(AuthUser.authenticate())
+      .get(PathController.index)
+      .post(PathController.store);
+      
+   app.route('/paths/:data')
+      //.all(AuthUser.authenticate())
+      .get(PathController.show)
+      .post(PathController.update)
+      .delete(PathController.delete);
+
+>>>>>>> origin/path_city
    /* ROTAS DE OPINIÕES */
 
    app.route('/opinions')
