@@ -79,7 +79,11 @@ module.exports = {
                     name: { [Operation.like]: `%${userData}%` }
                 }
             })
-                .then(usuarios => res.json(usuarios))
+                .then(usuarios => {
+                    usuarios.forEach(user => {
+                        // user.senha = 
+                    });
+                })
                 .catch(err => res.status(500).send(err));
         }
 

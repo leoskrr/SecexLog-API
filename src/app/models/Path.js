@@ -10,12 +10,8 @@ module.exports = (sequelize, DataTypes) => {
         model: 'cities',
         key:'nome'
       }
-      // validate: {
-      //   notEmpty(value) {
-      //     if(!value)
-      //       throw new Error('O nome da cidade inicial não foi informado');
-      //   }
-      // }
+
+ 
     },
     endCidade: {
       type:DataTypes.STRING,
@@ -24,22 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         model: 'cities',
         key: 'nome'
       }
-    //   validate: {
-    //     notEmpty(value) {
-    //       if(!value)
-    //         throw new Error('O nome da cidade final não foi informado');
-    //     }
-    // }
+
   },
     modalTipo: {
       type:DataTypes.STRING,
       allowNull: false,
-    //   validate: {
-    //     notEmpty(value) {
-    //       if(!value)
-    //         throw new Error('O tipo modal não foi informado');
-    //     }
-    // }
+
     },
     prestNome: {
       type:DataTypes.STRING,
@@ -48,12 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'providers',
         key: 'nome'
       }
-    //   validate: {
-    //     notEmpty(value) {
-    //       if(!value)
-    //         throw new Error('O nome do prestador não foi informado');
-    //     }
-    // }
+
     },
     dia: {
       type:DataTypes.STRING,
@@ -61,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     hora:{
       type:DataTypes.STRING,
-      
+
     },
     duration: {
       type:DataTypes.STRING,

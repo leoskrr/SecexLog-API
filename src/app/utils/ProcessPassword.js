@@ -8,10 +8,10 @@ function cryptPsw(password) {
   return bcrypt.hashSync(password, salt);
 
 }
-/*Função usada para descriptografar a senha
+/*Função usada para comparar senhas
   Recebe a senha digitada e a que está no database
 */
-function uncryptPsw(typedpass, password) {
+function comparePsw(typedpass, password) {
 
   return bcrypt.compareSync(typedpass, password)
 
@@ -21,4 +21,4 @@ function generatePassword() {
   //O slice fará pegar somente os últimos 10 caracteres do resultado em base36
   return Math.random().toString(36).slice(-10);
 }
-module.exports = { cryptPsw, uncryptPsw, generatePassword }
+module.exports = { cryptPsw, comparePsw, generatePassword }

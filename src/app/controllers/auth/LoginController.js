@@ -3,7 +3,7 @@ const jwt = require('jwt-simple');
 
 const { User } = require('../../models');
 const { authSecret } = require('../../../.env');
-const { uncryptPsw } = require('../../utils/ProcessPassword');
+const { comparePsw } = require('../../utils/ProcessPassword');
 
 module.exports = {
 
@@ -27,7 +27,7 @@ module.exports = {
             Verifica se as senha do usuário está certa, passando para o primeiro parâmetro 
             a senha do banco de dados e, no segundo, a senha digitada.
         */
-        const isMatch = uncryptPsw(req.body.senha, user.senha);
+        const isMatch = comparePsw(req.body.senha, user.senha);
 
         if(!isMatch) return res.status(400).send('Login ou senha incorreta!');
         /*
@@ -77,10 +77,6 @@ module.exports = {
 
             **/
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/path_city
         res.send(false);
     }
 

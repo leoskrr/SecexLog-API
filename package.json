@@ -12,15 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-<<<<<<< HEAD
-=======
-    "dotenv": "^8.2.0",
->>>>>>> origin/path_city
     "express": "^4.17.1",
     "jwt-simple": "^0.5.6",
-    "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
     "nodemailer": "^6.3.1",
     "nodemailer-express-handlebars": "^3.1.0",

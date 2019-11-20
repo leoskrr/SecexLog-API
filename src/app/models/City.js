@@ -5,24 +5,28 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    relations:{
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     cBase:{
       type:DataTypes.BOOLEAN
     },
     cAuditada: {
       type:DataTypes.BOOLEAN
     },
-    initDataFeriado: {
-      type:DataTypes.STRING
-    },
     initDataCheia: {
-      type:DataTypes.STRING
-    },
-    endDataFeriado:{
       type:DataTypes.STRING
     },
     endDataCheia: {
       type:DataTypes.STRING
     },
+    obsInterdicao: {
+      type: DataTypes.TEXT
+    },
+    obsCidade: {
+      type: DataTypes.TEXT
+    }
   }, {
 
     defaultScope: {

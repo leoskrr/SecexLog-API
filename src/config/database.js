@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const { db } = require('../.env');
-=======
-const { db } = require('../env');
->>>>>>> origin/path_city
 
 module.exports = {
   ...db,

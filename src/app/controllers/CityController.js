@@ -23,13 +23,7 @@ module.exports = {
             const city = { ...req.body };
 
             existsOrError(city.nome, "O nome da cidade deve ser informado");
-            existsOrError(city.cBase, "Por favor informe se é uma cidade base");
-            existsOrError(city.cAuditada, "Por favor informe se é uma cidade auditada");
-            // existsOrError(city.initDataFeriado, "Por favor informe a data inicial do feriado");
-            // existsOrError(city.endDataFeriado, "Por favor informe a data final do feriado");
-            // existsOrError(city.initDataCheia, "Por favor informe a data inicial da cheia");
-            // existsOrError(city.endDataCheia, "Por favor informe a data final da cheia");
-
+            existsOrError(city.relations, "As cidades relacionadas devem ser informadas");
 
             let resultFromDB = await City.findOne({
                 where: { nome: city.nome }

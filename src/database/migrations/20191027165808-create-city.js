@@ -11,26 +11,20 @@ module.exports = {
       nome: {
         type: Sequelize.STRING
       },
+      relations: {
+        type: Sequelize.STRING
+      },
       cBase: {
         type: Sequelize.BOOLEAN
       },
       cAuditada: {
         type: Sequelize.BOOLEAN
       },
-      initDataFeriado: {
-        type: Sequelize.STRING
-      },
       initDataCheia: {
-        type: Sequelize.STRING
-      },
-      endDataFeriado: {
         type: Sequelize.STRING
       },
       endDataCheia: {
         type: Sequelize.STRING
-      },
-      interdicaoTrecho:{
-        type: Sequelize.BOOLEAN
       },
       obsInterdicao: {
         type: Sequelize.TEXT
