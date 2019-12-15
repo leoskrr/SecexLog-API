@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }
   }, {});
+<<<<<<< HEAD
   Provider.associate = (models) =>{
     Provider.belongsToMany(models.City, {
         through: 'cityProviders',
@@ -18,5 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'Provider_Id'        
         });
     };
+=======
+  Provider.associate = function (models) {
+    // associations can be defined here
+  };
+>>>>>>> f80e84a78afa13a4d357a5a3325099e0cf08e70a
   return Provider;
 };

@@ -67,10 +67,34 @@ module.exports = {
         retornando, assim, apenas um usuário. Caso seja falsa, será feita
         uma pesquisa por nome, retornado vários usuários. 
         */
+<<<<<<< HEAD
     if (checkById) {
       User.findOne({
         where: {
           id: userData
+=======
+        if (checkById) {
+            User.findOne({
+                where: {
+                    id: userData
+                }
+            })
+                .then(usuario => res.json(usuario))
+                .catch(err => res.status(500).send(err));
+        }
+        else {
+            User.findAll({
+                where: {
+                    name: { [Operation.like]: `%${userData}%` }
+                }
+            })
+                .then(usuarios => {
+                    usuarios.forEach(user => {
+                        // user.senha = 
+                    });
+                })
+                .catch(err => res.status(500).send(err));
+>>>>>>> f80e84a78afa13a4d357a5a3325099e0cf08e70a
         }
       })
         .then(usuario => res.json(usuario))

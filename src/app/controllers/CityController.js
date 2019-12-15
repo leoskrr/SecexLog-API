@@ -23,7 +23,11 @@ module.exports = {
             const city = { ...req.body };
 
             existsOrError(city.nome, "O nome da cidade deve ser informado");
+<<<<<<< HEAD
             // existsOrError(city.relations, "As cidades relacionadas devem ser informadas");
+=======
+            existsOrError(city.relations, "As cidades relacionadas devem ser informadas");
+>>>>>>> f80e84a78afa13a4d357a5a3325099e0cf08e70a
 
             let resultFromDB = await City.findOne({
                 where: { nome: city.nome }

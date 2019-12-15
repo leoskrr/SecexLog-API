@@ -28,11 +28,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     }
   }, {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f80e84a78afa13a4d357a5a3325099e0cf08e70a
     defaultScope: {
       attributes: { exclude: ['createdAt','updatedAt'] },
     }
   });
+<<<<<<< HEAD
   
   City.associate = (models) =>{
     City.belongsToMany(models.City, {
@@ -41,5 +46,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'CityId'        
         });
     };
+=======
+  City.associate = function(models) {
+    // associations can be defined here
+  };
+>>>>>>> f80e84a78afa13a4d357a5a3325099e0cf08e70a
   return City;
 };
