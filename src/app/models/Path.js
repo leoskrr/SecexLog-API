@@ -38,6 +38,30 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('hora',hora.join(','));
      },
 
+    },
+    duration: {
+      type: DataTypes.STRING
+    },
+    mileage: {
+      type: DataTypes.DOUBLE
+    },
+    cost: {
+      type: DataTypes.DOUBLE
+    },
+    departure: {
+      type: DataTypes.STRING
+    },
+    cost: {
+      type: DataTypes.DOUBLE
+    },
+    arrival: {
+      type: DataTypes.STRING
+    },
+    linha: {
+      type: DataTypes.BOOLEAN
+    },
+    contratado: {
+      type: DataTypes.BOOLEAN
     }
   }, {
       defaultScope: {

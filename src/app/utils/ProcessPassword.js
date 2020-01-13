@@ -11,7 +11,6 @@ function cryptPsw(password) {
 */
 function comparePsw(typedpass, password) {
   // return typedpass === password;
-
   return bcrypt.compareSync(typedpass, password);
 }
 /*Gera uma senha aleatória para a recuperação de senha do usuário */
