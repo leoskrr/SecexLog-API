@@ -1,10 +1,10 @@
-require('dotenv/config');
+const ck = require('ckey');
 
 module.exports = {
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  host: process.env.DB_HOST,
+  username: ck.DB_USER,
+  password: ck.DB_PASS,
+  database: ck.DB_NAME,
+  host: ck.DB_HOST,
   dialect: 'mysql',
   // define: {
   //   timestamps: false
