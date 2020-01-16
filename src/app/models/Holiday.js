@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     nome: DataTypes.STRING,
     city_id: DataTypes.INTEGER,
     init: DataTypes.STRING,
-    end: DataTypes.STRING
+    end: DataTypes.STRING,
+    nacional: DataTypes.BOOLEAN
   }, {});
   Holiday.associate = function(models) {
     // associations can be defined here
