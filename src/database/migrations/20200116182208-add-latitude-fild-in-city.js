@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
-      'city',
+      'cities',
       'latitute',
       {
         type: Sequelize.STRING,
@@ -13,11 +13,8 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
-      'city',
+      'cities',
       'latitute',
-      {
-        type: Sequelize.STRING,
-      },
     );
   }
 };
