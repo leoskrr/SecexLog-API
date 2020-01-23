@@ -3,14 +3,7 @@ const Sequelize = require("sequelize");
 const { Path } = require("../../models");
 const Operation = Sequelize.Op;
 
-// var pathResponse;
-
-// function setPathResponse(path,date) {
-
-//   console.log(pathResponse);
-// }
-
-async function getPathResponse(initCidade, endCidade, date) {
+async function getPath(initCidade, endCidade, date) {
 
   const path = await Path.findOne({
     where: {
@@ -35,63 +28,24 @@ async function getPathResponse(initCidade, endCidade, date) {
     }
   }
 
-  // console.log(pathResponse)
-
   return pathResponse;
 }
 
-function foo(){
-  var num = {
-    aaa: "aaaa"
-  }
-  return num;
-}
-
 module.exports = {
-  index(req, res) {
-    //fazendo spread da entrada (arrays de json)
+  async index(req, res) {
+
     var object = [...req.body];
-    var response = [];
+    
+    var data = await Promise.all(object.map(async obj => {
+      return {
+        ...obj,
+        paths: {
+          going: await getPath(obj.cityDeparture, obj.cityRegress, obj.dateDeparture),
+          back: await getPath(obj.cityRegress, obj.cityDeparture, obj.dateRegress)
+        }
+      }
+    }));
 
-    //map dos json e fazer o find em cada um
-    object.map(async (obj) => {
-      var singleResponse = {
-        ...obj
-      };
-      // var paths = {
-      //   going: {},
-      //   back: {}
-      // };
-
-      /* RETORNAR MILEAGE, PRICE, DURATION
-       código aqui */
-
-      /* RETORNAR WARNINGS DAS CIDADES
-        código aqui */
-
-      //TRAJETO DE IDA
-
-      var x = getPathResponse(obj.cityDeparture, obj.cityRegress, obj.dateDeparture);
-      console.log(x);
-
-      // getPathResponse(obj.cityDeparture, obj.cityRegress, obj.dateDeparture)
-      //   .then(function (result) {
-      //     return paths.going = result;
-
-      //   })
-
-      // console.log(going);
-
-      //TRAJETO DE VOLTA
-      // paths.back = findPath(obj.cityRegress, obj.cityDeparture, obj.dateRegress);
-
-      // console.log(paths);
-
-      // console.log(going)
-
-      response.push(singleResponse);
-    })
-
-    return res.status(200).send(response);
+    return res.status(200).send(data);
   }
 };
