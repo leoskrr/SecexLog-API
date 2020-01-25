@@ -3,11 +3,30 @@ const Sequelize = require("sequelize");
 const { Path, City, Holiday } = require("../../models");
 const Operation = Sequelize.Op;
 
-async function getWarnings(city1, city2) {
+async function getCityId(city) {
+  try {
+    const response = await City.findOne({
+      attributes: ['id'],
+      where: {
+        nome: city
+      }
+    });
+
+    return response.dataValues;
+
+  } catch (error) {
+    return { "error": error };
+  }
+}
+
+async function getWarnings(city1, city2, dateDep, dateReg) {
   const warnings = [];
 
+  const cityDep = await getCityId(city1);
+  const cityReg = await getCityId(city2);
+
   try {
-    const allWarnings = await City.findAll({
+    const observations = await City.findAll({
       attributes: ['obsInterdicao', 'obsCidade'],
       where: {
         nome: {
@@ -16,13 +35,32 @@ async function getWarnings(city1, city2) {
       }
     });
 
-    allWarnings.map(warning => {
-      warnings.push(warning.dataValues.obsInterdicao);
-      warnings.push(warning.dataValues.obsCidade);
+    observations.map(obs => {
+      warnings.push(obs.dataValues.obsInterdicao);
+      warnings.push(obs.dataValues.obsCidade);
     });
 
+    const holidays = await Holiday.findAll({
+      where: {
+        city_id: {
+          [Operation.in]: [cityDep.id, cityReg.id]
+        },
+        [Operation.or]: [{ init: dateDep }, { init: dateReg }],
+        [Operation.or]: [{ end: dateDep }, { end: dateReg }],
+      }
+    })
+
+    if (holidays) {
+      holidays.map(holiday => {
+        if (holiday.dataValues.init === holiday.dataValues.end)
+          warnings.push(`Feriado dia ${holiday.dataValues.init}: ${holiday.dataValues.nome}`);
+        else
+          warnings.push(`Feriados no dia ${holiday.dataValues.init} até o dia ${holiday.dataValues.end}: ${holiday.dataValues.nome}`);
+      })
+    }
+
   } catch (error) {
-    return res.status(500).send({ "error": error });
+    return { "error": error };
   }
 
   return warnings;
@@ -60,7 +98,7 @@ async function getPaths(initCidade, endCidade, date) {
       });
     })
   } catch (error) {
-    return res.status(500).send({ "error": error });
+    return { "error": error };
   }
 
   return paths;
@@ -92,7 +130,7 @@ module.exports = {
 
       return {
         ...obj,
-        warnings: await getWarnings(obj.cityDeparture, obj.cityRegress),
+        warnings: await getWarnings(obj.cityDeparture, obj.cityRegress, obj.dateDeparture, obj.dateRegress),
         paths: await formatePaths(obj.cityDeparture, obj.cityRegress, obj.dateDeparture, obj.dateRegress)
       }
     }));
