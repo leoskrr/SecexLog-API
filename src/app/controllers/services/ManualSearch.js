@@ -3,18 +3,23 @@ const Sequelize = require("sequelize");
 const { Path, City } = require("../../models");
 const Operation = Sequelize.Op;
 
-async function getWarnings(city){
-  const warnings = await City.findOne({
+async function getWarnings(city1, city2){
+  const warnings = [];
+  const allWarnings = await City.findAll({
     attributes: ['obsInterdicao','obsCidade'],
     where: {
-      nome: city
+      nome: {
+        [Operation.in]: [city1, city2]
+      }
     }
   });
 
-  return {
-    interdition: warnings.dataValues.obsInterdicao,
-    observation: warnings.dataValues.obsCidade
-  }
+  allWarnings.map(warning => {
+    warnings.push(warning.dataValues.obsInterdicao);
+    warnings.push(warning.dataValues.obsCidade);
+  })
+
+  return warnings;
 }
 
 async function getPath(initCidade, endCidade, date) {
@@ -52,8 +57,6 @@ module.exports = {
 
     const data = await Promise.all(object.map(async obj => {
 
-      getWarnings(obj.cityRegress);
-
       const path = await Path.findOne({
         where: {
           initCidade: { [Operation.like]: `%${obj.cityDeparture}%` },
@@ -70,14 +73,11 @@ module.exports = {
         mileage: mileage,
         price: price,
         duration: duration,
-        warnings: {
-          cityDeparture: await getWarnings(obj.cityDeparture),
-          cityRegress: await getWarnings(obj.cityRegress)
-        },
-        paths: {
-          going: await getPath(obj.cityDeparture, obj.cityRegress, obj.dateDeparture),
-          back: await getPath(obj.cityRegress, obj.cityDeparture, obj.dateRegress)
-        }
+        warnings: await getWarnings(obj.cityDeparture, obj.cityRegress)
+        // paths: {
+        //   going: await getPath(obj.cityDeparture, obj.cityRegress, obj.dateDeparture),
+        //   back: await getPath(obj.cityRegress, obj.cityDeparture, obj.dateRegress)
+        // }
       }
     }));
 
