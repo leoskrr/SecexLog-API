@@ -1,10 +1,16 @@
 const Sequelize = require('sequelize');
 const crypto = require('crypto');
 
+const sgMail = require('@sendgrid/mail');
+var SENDGRID_API_KEY = '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';
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+
+
 const { User } = require('../../models');
 const { generatePassword, cryptPsw } = require('../../utils/ProcessPassword');
 
-const mailer = require('../../../modules/mailer');
+// const mailer = require('../../../modules/mailer');
 
 module.exports = {
 
@@ -47,18 +53,16 @@ module.exports = {
             })
             .catch(err => res.status(500).send(err));
 
-            mailer.sendMail({
-                to: email,
-                from: 'aphoreofficial@gmail.com',
-                template: '/auth/forgot_password',
-                context: { newPass, user }
-            }, (err) => {
-                if(err)
-                    return res.status(400).send(err)
-                
-                return res.send();
-            })  
-
+            const msg = {
+                to: User.nome,
+                from: "euclidesvasconcelos01@gmail.com",
+                subject: "Its nice send an email",
+                text: "Teste exemplo",
+                html: `A sua senha é:${User.senha}`
+            }
+            sgMail.send(msg);
+        
+        
         } catch (err) {
             console.log(err);
             return res.status(400).send({ erro: 'erro ao recuperar senha' });
