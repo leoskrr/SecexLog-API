@@ -162,29 +162,13 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                     j++;
                 }
             }
-
-            // const pathArrival = await Path.findOne({
-            //     where: {
-            //         initCidade: city,
-            //         endCidade: cityArrival,
-            //         dia: [dayPath],
-            //         hora: timeArrival
-            //     }
-            // });
-
-            // if (pathArrival) {
-                return {
-                    time: timeArrival,
-                    day: dayPath,
-                    city: cityArrival,
-                    modal: modal
-                }
-            // } else {
-            //     return {
-            //         error: `there's not a path from ${city} to ${cityArrival} on ${dayPath} at ${timeArrival}`
-            //     }
-            // }
-
+            
+            return {
+                time: timeArrival,
+                day: dayPath,
+                city: cityArrival,
+                modal: modal
+            }
         }
         return {
             time: time,
