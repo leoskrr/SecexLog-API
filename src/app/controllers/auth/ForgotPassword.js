@@ -6,7 +6,7 @@ var SENDGRID_API_KEY = 'SG.17vvbSMFRR-bEoCgUJCbcQ.DsZ5gbXnC1azX1VIGW2311UaobLYfY
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 
-
+const { emailFeature } = require('../services/EmailFeature')
 const { User } = require('../../models');
 const { generatePassword, cryptPsw } = require('../../utils/ProcessPassword');
 
@@ -53,15 +53,7 @@ module.exports = {
             })
             .catch(err => res.status(500).send(err));
 
-            const msg = {
-                to: User.nome,
-                from: "euclidesvasconcelos01@gmail.com",
-                subject: "Its nice send an email",
-                text: "Teste exemplo",
-                html: `A sua senha é:${User.senha}`
-            }
-            sgMail.send(msg);
-        
+            emailFeature(user.email, "Teste de login", `Sua senha é ${user.senha}`)
         
         } catch (err) {
             console.log(err);
