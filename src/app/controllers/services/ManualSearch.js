@@ -243,6 +243,8 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
 
     for(i=0; i< waysGoing.length; i++){
         pathsResponse.push({
+            totalCost: waysGoing[i].going.cost + waysBack[i].back.cost,
+            totalMileage: waysGoing[i].going.mileage + waysBack[i].back.mileage,
             going: waysGoing[i].going,
             back: waysBack[i].back
         })
