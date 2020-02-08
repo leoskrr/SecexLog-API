@@ -7,7 +7,7 @@ const mailer = require('../../../modules/mailer');
 
 module.exports = {
     //POST - PDF GENERATION AND FETCHING OF THE DATA
-    generate(req, res) {
+    create(req, res) {
         const userEmail = req.query.email;
 
         pdf.create(pdfTemplate(req.body), {}).toFile('viagem-detalhes.pdf', (err) => {
@@ -22,7 +22,7 @@ module.exports = {
                 attachments: [
                     {
                         filename: 'viagem-detalhes.pdf',
-                        path: path.join(__dirname,'../../../../viagem-detalhes.pdf'),
+                        path: path.join(__dirname, '../../../../viagem-detalhes.pdf'),
                         contentType: 'application/pdf'
                     }
                 ]
@@ -30,5 +30,9 @@ module.exports = {
 
             return res.status(204).send();
         });
+    },
+
+    fetch(req, res) {
+        res.sendFile(path.join(__dirname, '../../../../viagem-detalhes.pdf'))
     }
 }

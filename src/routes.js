@@ -148,5 +148,6 @@ module.exports = app => {
   //    .delete(authAdmin(HolidayController.delete));
 
   /* DETALHES DA VIAGEM (PDF) */
-  app.route("/send-pdf").post(TravelDetails.generate);
+  app.post("/create-pdf", TravelDetails.create);
+  app.get("/fetch-pdf", TravelDetails.fetch);
 };
