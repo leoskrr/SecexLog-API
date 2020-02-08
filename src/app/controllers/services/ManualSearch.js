@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const { Path, City, Holiday } = require("../../models");
+const { Path, City, Holiday, Modal } = require("../../models");
 
 const Operation = Sequelize.Op;
 const daysInPt = [
@@ -99,6 +99,17 @@ function getDay(date) {
     }
 
     return daysInPt[dateFormated.getUTCDay()];
+}
+
+const findModalImg = async (modal) => {
+    const result = await Modal.findOne({
+        where: {
+            name: {
+                [Operation.like]: `%${modal}%`
+            }
+        }
+    });
+    return result.imgUrl;
 }
 
 async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
@@ -206,6 +217,7 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 date: dateDep,
                 mileage: path.mileage,
                 cost: path.cost,
+                modalImg: await findModalImg(path.modal),
                 departure: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
@@ -229,6 +241,7 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 date: dateReg,
                 mileage: path.mileage,
                 cost: path.cost,
+                modalImg: await findModalImg(path.modal),
                 departure: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
