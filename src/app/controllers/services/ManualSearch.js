@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const { Path, City, Holiday, Modal } = require("../../models");
+const { Path, City, Holiday, Modal, Provider } = require("../../models");
 
 const Operation = Sequelize.Op;
 const daysInPt = [
@@ -109,7 +109,22 @@ const findModalImg = async (modal) => {
             }
         }
     });
-    return result.imgUrl;
+    if(result)
+        return result.imgUrl;
+    return null;
+}
+
+const findProvider = async (modal) => {
+    const result = await Provider.findOne({
+        where: {
+            modal: {
+                [Operation.like]: `%${modal}%`
+            }
+        }
+    });
+    if (result)
+        return result.nome;
+    return null;
 }
 
 async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
@@ -218,11 +233,12 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 mileage: path.mileage,
                 cost: path.cost,
                 modalImg: await findModalImg(path.modal),
+                provider: await findProvider(path.modal),
                 departure: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
 
-            index+=1;
+            index += 1;
 
             waysGoing.push({
                 going: data
@@ -242,11 +258,12 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 mileage: path.mileage,
                 cost: path.cost,
                 modalImg: await findModalImg(path.modal),
+                provider: await findProvider(path.modal),
                 departure: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
 
-            index+=1;
+            index += 1;
 
             waysBack.push({
                 back: data
@@ -254,7 +271,7 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
         })
     );
 
-    for(i=0; i< waysGoing.length; i++){
+    for (i = 0; i < waysGoing.length; i++) {
         pathsResponse.push({
             totalCost: waysGoing[i].going.cost + waysBack[i].back.cost,
             totalMileage: waysGoing[i].going.mileage + waysBack[i].back.mileage,
