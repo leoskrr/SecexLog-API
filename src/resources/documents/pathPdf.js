@@ -1,116 +1,149 @@
 module.exports = (data) => {
     return `
     <!DOCTYPE html>
-    <html lang="pt-br">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Detalhes da Viagem</title>
-        <style>
-            body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                color: #8c8c8c;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-    
-            header {
-                padding: 5px 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-    
-            .logo-secex {
-                width: 250px;
-                height: 50px;
-            }
-    
-            .logo-tce {
-                width: 80px;
-                height: 80px;
-            }
-    
-            img {
-                width: 100%;
-                height: 100%;
-            }
-    
-            .divider {
-                height: 100px;
-                width: 2px;
-                background-color: #ccc;
-                margin: 0 50px;
-            }
-    
-            main {
-                width: 70%;
-            }
-    
-            .cities {
-                color: #4f4f4f;
-            }
-        </style>
-    </head>
-    
-    <body>
-        <header>
-            <div class="logo-secex">
-                <img src="https://imgur.com/YHyH3LQ" alt="logo secexlog">
-            </div>
-            <div class="divider"></div>
-            <div class="logo-tce">
-                <img src="../img/logo-tce.png" alt="logo tce">
-            </div>
-        </header>
-        <main>
-            <h1>Detalhes da viagem</h1>
+<html lang="pt-br">
 
-            <h3 class="cities">${data.cityDeparture} - ${data.cityRegress}</h3>
-    
-            <p><b>Partida</b>: ${data.going.date} às ${data.going.departure.time} AM</p>
-    
-            <p><b>Chegada</b>: ${data.going.arrival.day} às ${data.going.arrival.time}</p>
-    
-            <p><b>Duração da viagem</b>: ${data.duration}</p>
-    
-            <p><b>Prestador de Serviço</b>: ${data.going.departure.modal} - ${data.going.provider}</p>
-    
-            <p><b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes</p>
-    
-            <p><b>Local de desembarque</b>: Almirante Vitória da Cruz</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalhes da Viagem</title>
+    <style>
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica';
+            color: #8c8c8c;
+        }
 
-            <p>Informações adicionais: ${data.warnings}</p>
-    
-            <br>
-    
-            <h3 class="cities">${data.cityRegress} - ${data.cityDeparture}</h3>
-    
-            <p><b>Partida</b>: ${data.back.date} às ${data.back.departure.time} AM</p>
-    
-            <p><b>Chegada</b>: ${data.back.arrival.day} às ${data.back.arrival.time}</p>
-    
-            <p><b>Duração da viagem</b>: ${data.duration}</p>
-    
-            <p><b>Prestador de Serviço</b>: ${data.back.departure.modal} - ${data.back.provider}</p>
-    
-            <p><b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes</p>
-            
-            <p><b>Local de desembarque</b>: Almirante Vitória da Cruz</p>
+        h3 {
+            color: #555;
+        }
 
-            <p>Informações adicionais: ${data.warnings}</p>
-        </main>
-    </body>
-    
-    </html>
-    
+        table {
+            width: 100%;
+        }
+
+        .item {
+            padding-bottom: 15px;
+        }
+        #imgsecex{ 
+            margin: 10px;
+            padding-right: 25px;
+            border-right: 2px solid #8c8c8c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <table cellspacing=0>
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <img src="https://i.ibb.co/P6WT2Xz/fluxo-SECEXv2.png" alt="Logo Secex" style="width: 200px;" id="imgsecex">
+                        <img src="https://i.ibb.co/4P5S3BR/tce.png" alt="Logo TCE" style="width: 60px;" id="imgtce">
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <h2>Detalhes da Viagem</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h3>${data.cityDeparture} - ${data.cityRegress}</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Partida</b>: ${data.going.date} às ${data.going.departure.time}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Chegada</b>: ${data.going.arrival.day} às ${data.going.arrival.time}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Duração da Viagem</b>: ${data.duration}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Prestador de Serviço</b>: ${data.going.departure.modal} - ${data.going.provider}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Local de desembarque</b>: Almirante Vitória da Cruz
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Informações adicionais: ${data.warnings}
+                    </td>
+                </tr>
+                <!-- 
+                    TRAJETO DE VOLTA
+                -->
+                <tr>
+                    <td colspan="2">
+                        <h3>${data.cityRegress} - ${data.cityDeparture}</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Partida</b>: ${data.back.date} às ${data.back.departure.time}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Chegada</b>: ${data.back.arrival.day} às ${data.back.arrival.time}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Duração da Viagem</b>: ${data.duration}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Prestador de Serviço</b>: ${data.back.departure.modal} - ${data.back.provider}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="item">
+                        <b>Local de desembarque</b>: Almirante Vitória da Cruz
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Informações adicionais: ${data.warnings}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
     `
 }
