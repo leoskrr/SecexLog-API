@@ -114,19 +114,6 @@ const findModalImg = async (modal) => {
     return null;
 }
 
-const findProvider = async (modal) => {
-    const result = await Provider.findOne({
-        where: {
-            modal: {
-                [Operation.like]: `%${modal}%`
-            }
-        }
-    });
-    if (result)
-        return result.nome;
-    return null;
-}
-
 async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
 
     const pathsResponse = [];
@@ -233,7 +220,7 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 mileage: path.mileage,
                 cost: path.cost,
                 modalImg: await findModalImg(path.modal),
-                provider: await findProvider(path.modal),
+                provider: path.prestNome,
                 departure: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayDep, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
@@ -258,7 +245,7 @@ async function formatePaths(cityDep, cityReg, dateDep, dateReg) {
                 mileage: path.mileage,
                 cost: path.cost,
                 modalImg: await findModalImg(path.modal),
-                provider: await findProvider(path.modal),
+                provider: path.prestNome,
                 departure: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal),
                 arrival: await findWay(hoursDeparture[index], dayReg, path.initCidade, path.modal, true, path.duration, path.endCidade),
             }
