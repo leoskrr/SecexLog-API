@@ -23,6 +23,10 @@ module.exports = (data) => {
             color: #555;
         }
 
+        a {
+            color: #bdbdbd;
+        }
+
         table {
             width: 100%;
         }
@@ -30,7 +34,8 @@ module.exports = (data) => {
         .item {
             padding-bottom: 15px;
         }
-        #imgsecex{ 
+
+        #imgsecex {
             margin: 10px;
             padding-right: 25px;
             border-right: 2px solid #8c8c8c;
@@ -44,10 +49,11 @@ module.exports = (data) => {
             <thead>
                 <tr>
                     <th colspan="2">
-                        <img src="https://i.ibb.co/P6WT2Xz/fluxo-SECEXv2.png" alt="Logo Secex" style="width: 200px;" id="imgsecex">
+                        <img src="https://i.ibb.co/P6WT2Xz/fluxo-SECEXv2.png" alt="Logo Secex" style="width: 200px;"
+                            id="imgsecex">
                         <img src="https://i.ibb.co/4P5S3BR/tce.png" alt="Logo TCE" style="width: 60px;" id="imgtce">
                     </th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -73,22 +79,30 @@ module.exports = (data) => {
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Duração da Viagem</b>: ${data.duration}
+                        <b>Duração da Viagem</b>: ${data.going.places.duration}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Prestador de Serviço</b>: ${data.going.departure.modal} - ${data.going.provider}
+                        <b>Prestador de Serviço</b>: ${data.going.departure.modal} - ${data.going.provider.name}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes
+                        <b>Local de embarque</b>: ${data.going.places.departure}
+                        <table style="padding-left: 60px;">
+                            <tr>
+                                <td>Telefone: ${data.going.provider.number}</td>
+                            </tr>
+                            <tr>
+                                <td>Email: <a href="#">${data.going.provider.email}</a> </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Local de desembarque</b>: Almirante Vitória da Cruz
+                        <b>Local de desembarque</b>: ${data.going.places.arrival}
                     </td>
                 </tr>
                 <tr>
@@ -116,22 +130,30 @@ module.exports = (data) => {
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Duração da Viagem</b>: ${data.duration}
+                        <b>Duração da Viagem</b>: ${data.back.places.duration}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Prestador de Serviço</b>: ${data.back.departure.modal} - ${data.back.provider}
+                        <b>Prestador de Serviço</b>: ${data.back.departure.modal} - ${data.back.provider.name}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Local de embarque</b>: Aeroporto Internacional Eduardo Gomes
+                        <b>Local de embarque</b>: ${data.back.places.departure}
+                        <table style="padding-left: 60px;">
+                            <tr>
+                                <td>Telefone: ${data.back.provider.number}</td>
+                            </tr>
+                            <tr>
+                                <td>Email: <a href="#">${data.back.provider.email}</a> </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="item">
-                        <b>Local de desembarque</b>: Almirante Vitória da Cruz
+                        <b>Local de desembarque</b>: ${data.back.places.arrival}
                     </td>
                 </tr>
                 <tr>

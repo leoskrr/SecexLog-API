@@ -21,9 +21,17 @@ async function findPlaces(city1, city2, day, hour, provider) {
         }
     })
 
+    var duration = path.duration;
+
+    if (path !== null) {
+        duration = duration.split(':');
+        duration = duration[0] + "h" + duration[1] + "m";
+    }
+
     return {
         departure: path !== null ? path.departure : "não registrado",
         arrival: path !== null ? path.arrival : "não registrado",
+        duration: path !== null ? duration : "não registrada",
     }
 }
 
@@ -61,7 +69,7 @@ module.exports = {
         pdf.create(pdfTemplate(data), {}).toFile('viagem-detalhes.pdf', (err) => {
             if (err)
                 return res.send(Promise.reject());
-            console.log(data);
+
             mailer.sendMail({
                 to: userEmail,
                 from: process.env.ACCOUNT_EMAIL,
