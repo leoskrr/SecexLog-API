@@ -52,7 +52,7 @@ module.exports = {
 
     async create(req, res) {
         const userEmail = req.query.email;
-        var data = {
+        const data = {
             ...req.body,
             going: {
                 ...req.body.going,
@@ -70,19 +70,21 @@ module.exports = {
             if (err)
                 return res.send(Promise.reject());
 
-            mailer.sendMail({
-                to: userEmail,
-                from: process.env.ACCOUNT_EMAIL,
-                template: '/travel-details',
-                subject: 'SecexLog - Detalhes da Viagem',
-                attachments: [
-                    {
-                        filename: 'viagem-detalhes.pdf',
-                        path: path.join(__dirname, '../../../../viagem-detalhes.pdf'),
-                        contentType: 'application/pdf'
-                    }
-                ]
-            })
+            if (userEmail) {
+                mailer.sendMail({
+                    to: userEmail,
+                    from: process.env.ACCOUNT_EMAIL,
+                    template: '/travel-details',
+                    subject: 'SecexLog - Detalhes da Viagem',
+                    attachments: [
+                        {
+                            filename: 'viagem-detalhes.pdf',
+                            path: path.join(__dirname, '../../../../viagem-detalhes.pdf'),
+                            contentType: 'application/pdf'
+                        }
+                    ]
+                })
+            }
         });
         return res.status(204).send();
     },
