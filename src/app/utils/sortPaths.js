@@ -1,13 +1,11 @@
 function sortPaths(array, condition){ 
     var sorted = array
+
     if(condition === "cost"){
         sorted = sortByCost(array)
-
-        return sorted
     }
-    else{
-        return sorted
-    }
+    
+    return sorted
 }
 
 function sortByCost(item){
