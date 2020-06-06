@@ -20,6 +20,19 @@ const Operation = Sequelize.Op;
 [ ] feedbacks do sistema
 
 */
+async function countTaxis() {
+    const numberOfTaxis = Modal.findAndCountAll(
+        {
+            where: {
+                name: {
+                    [Operation.like]: '%táxi%'
+                }
+            },
+        })
+
+    return numberOfTaxis
+}
+
 async function countAirplanes() {
     const numberOfAirplanes = Modal.findAndCountAll(
         {
@@ -29,7 +42,6 @@ async function countAirplanes() {
                 }
             },
         })
-    console.log(numberOfAirplanes)
 
     return numberOfAirplanes
 }
@@ -44,10 +56,12 @@ module.exports = {
     async index(req, res) {
         const modals = await countModals();
         const airplanes = await countAirplanes();
+        const taxis = await countTaxis();
         
         return res.send({
             modals: modals,
-            airplanes: airplanes.count
+            airplanes: airplanes.count,
+            taxis: taxis.count
         })
     }
 }
