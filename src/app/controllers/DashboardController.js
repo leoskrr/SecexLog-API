@@ -1,28 +1,20 @@
 const Sequelize = require("sequelize");
 
-const { Modal, City, Opinions } = require("../models");
-// const { existsOrError, notExistsOrError } = require("../utils/validation");
+const { Modal, City, Opinion } = require("../models");
 
 const Operation = Sequelize.Op;
 
-/*
+async function getFeedbacksOfSystem(){
+    const feedbacks = await Opinion.findAll({
+        attributes: ['titulo','desc']
+    });
 
-- Retornar:
+    return feedbacks;
+}
 
-[X] Qtd de modais cadastrados
-[X] Qtd de avioes cadastrados
-[X] Qtd de taxis cadastrados
-[X] Qtd de barcos cadastrados - boat
-[X] Qtd de lanchas a jato cadastradas - motorboat
-[X] Qtd de voadeiras cadastradas
-[X] Qtd de rabetas cadastradas
-[X] feedbacks de cidades
-[ ] feedbacks do sistema
-
-*/
 async function getFeedbackOfCities(){
     const feedbacks = await City.findAll({
-        attributes: ['nome','obsCidade', 'obsInterdicao'],
+        attributes: ['nome','obsCidade', 'obsInterdicao']
     });
 
     return feedbacks;
@@ -30,9 +22,11 @@ async function getFeedbackOfCities(){
 
 async function getFeedbacks(){ 
     const feedbacksOfCities = await getFeedbackOfCities();
+    const feedbacksOfSystem = await getFeedbacksOfSystem();
 
     return { 
-        cities: feedbacksOfCities
+        cities: feedbacksOfCities,
+        system: feedbacksOfSystem
     }
 }
 
