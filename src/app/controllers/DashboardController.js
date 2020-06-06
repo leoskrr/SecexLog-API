@@ -10,7 +10,7 @@ const Operation = Sequelize.Op;
 - Retornar:
 
 [X] Qtd de modais cadastrados
-[ ] Qtd de avioes cadastrados
+[X] Qtd de avioes cadastrados
 [ ] Qtd de taxis cadastrados
 [ ] Qtd de barcos cadastrados
 [ ] Qtd de lanchas a jato cadastradas
@@ -20,6 +20,19 @@ const Operation = Sequelize.Op;
 [ ] feedbacks do sistema
 
 */
+async function countAirplanes() {
+    const numberOfAirplanes = Modal.findAndCountAll(
+        {
+            where: {
+                name: {
+                    [Operation.like]: '%avião%'
+                }
+            },
+        })
+    console.log(numberOfAirplanes)
+
+    return numberOfAirplanes
+}
 
 async function countModals() {
     const numberOfModals = Modal.count();
@@ -30,9 +43,11 @@ async function countModals() {
 module.exports = {
     async index(req, res) {
         const modals = await countModals();
-
+        const airplanes = await countAirplanes();
+        
         return res.send({
-            modals: modals
+            modals: modals,
+            airplanes: airplanes.count
         })
     }
 }
