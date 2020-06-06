@@ -22,7 +22,7 @@ const Operation = Sequelize.Op;
 */
 
 async function countThisModal(modal) {
-    const numberOfModals = Modal.findAndCountAll(
+    const numberOfModals = await Modal.findAndCountAll(
         {
             where: {
                 name: {
@@ -35,29 +35,33 @@ async function countThisModal(modal) {
 }
 
 async function countModals() {
-    const numberOfModals = Modal.count();
+    const numberOfModals = await Modal.count();
+    const airplanes = await countThisModal("avião");
+    const taxis = await countThisModal("táxi");
+    const boats = await countThisModal("barco");
+    const motorboats = await countThisModal("lancha");
+    const voadeiras = await countThisModal("voadeira");
+    const rabetas = await countThisModal("rabeta");
 
-    return numberOfModals;
-}
-
-module.exports = {
-    async index(req, res) {
-        const modals = await countModals();
-        const airplanes = await countThisModal("avião");
-        const taxis = await countThisModal("táxi");
-        const boats = await countThisModal("barco");
-        const motorboats = await countThisModal("lancha");
-        const voadeiras = await countThisModal("voadeira");
-        const rabetas = await countThisModal("rabeta");
-        
-        return res.send({
-            modals: modals,
+    return {
+        count: numberOfModals,
+        types: {
             airplanes: airplanes.count,
             taxis: taxis.count,
             boats: boats.count,
             motorboats: motorboats.count,
             voadeiras: voadeiras.count,
             rabetas: rabetas.count,
+        }
+    };
+}
+
+module.exports = {
+    async index(req, res) {
+        const modals = await countModals();
+
+        return res.send({
+            modals: modals,
         })
     }
 }
