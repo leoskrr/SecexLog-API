@@ -11,39 +11,27 @@ const Operation = Sequelize.Op;
 
 [X] Qtd de modais cadastrados
 [X] Qtd de avioes cadastrados
-[ ] Qtd de taxis cadastrados
-[ ] Qtd de barcos cadastrados
-[ ] Qtd de lanchas a jato cadastradas
+[X] Qtd de taxis cadastrados
+[ ] Qtd de barcos cadastrados - boat
+[ ] Qtd de lanchas a jato cadastradas - motorboat
 [ ] Qtd de voadeiras cadastradas
 [ ] Qtd de rabetas cadastradas
 [ ] feedbacks de cidades
 [ ] feedbacks do sistema
 
 */
-async function countTaxis() {
-    const numberOfTaxis = Modal.findAndCountAll(
+
+async function countThisModal(modal) {
+    const numberOfModals = Modal.findAndCountAll(
         {
             where: {
                 name: {
-                    [Operation.like]: '%táxi%'
+                    [Operation.like]: `%${modal}%`
                 }
             },
         })
 
-    return numberOfTaxis
-}
-
-async function countAirplanes() {
-    const numberOfAirplanes = Modal.findAndCountAll(
-        {
-            where: {
-                name: {
-                    [Operation.like]: '%avião%'
-                }
-            },
-        })
-
-    return numberOfAirplanes
+    return numberOfModals
 }
 
 async function countModals() {
@@ -55,8 +43,8 @@ async function countModals() {
 module.exports = {
     async index(req, res) {
         const modals = await countModals();
-        const airplanes = await countAirplanes();
-        const taxis = await countTaxis();
+        const airplanes = await countThisModal("avião");
+        const taxis = await countThisModal("táxi");
         
         return res.send({
             modals: modals,
