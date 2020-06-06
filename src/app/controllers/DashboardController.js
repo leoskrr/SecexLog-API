@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const { Modal } = require("../models");
+const { Modal, City, Opinions } = require("../models");
 // const { existsOrError, notExistsOrError } = require("../utils/validation");
 
 const Operation = Sequelize.Op;
@@ -12,14 +12,29 @@ const Operation = Sequelize.Op;
 [X] Qtd de modais cadastrados
 [X] Qtd de avioes cadastrados
 [X] Qtd de taxis cadastrados
-[ ] Qtd de barcos cadastrados - boat
-[ ] Qtd de lanchas a jato cadastradas - motorboat
-[ ] Qtd de voadeiras cadastradas
-[ ] Qtd de rabetas cadastradas
-[ ] feedbacks de cidades
+[X] Qtd de barcos cadastrados - boat
+[X] Qtd de lanchas a jato cadastradas - motorboat
+[X] Qtd de voadeiras cadastradas
+[X] Qtd de rabetas cadastradas
+[X] feedbacks de cidades
 [ ] feedbacks do sistema
 
 */
+async function getFeedbackOfCities(){
+    const feedbacks = await City.findAll({
+        attributes: ['nome','obsCidade', 'obsInterdicao'],
+    });
+
+    return feedbacks;
+}
+
+async function getFeedbacks(){ 
+    const feedbacksOfCities = await getFeedbackOfCities();
+
+    return { 
+        cities: feedbacksOfCities
+    }
+}
 
 async function countThisModal(modal) {
     const numberOfModals = await Modal.findAndCountAll(
@@ -59,9 +74,11 @@ async function countModals() {
 module.exports = {
     async index(req, res) {
         const modals = await countModals();
+        const feedbacks = await getFeedbacks();
 
         return res.send({
             modals: modals,
+            feedbacks: feedbacks
         })
     }
 }
