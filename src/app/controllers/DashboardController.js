@@ -45,11 +45,19 @@ module.exports = {
         const modals = await countModals();
         const airplanes = await countThisModal("avião");
         const taxis = await countThisModal("táxi");
+        const boats = await countThisModal("barco");
+        const motorboats = await countThisModal("lancha");
+        const voadeiras = await countThisModal("voadeira");
+        const rabetas = await countThisModal("rabeta");
         
         return res.send({
             modals: modals,
             airplanes: airplanes.count,
-            taxis: taxis.count
+            taxis: taxis.count,
+            boats: boats.count,
+            motorboats: motorboats.count,
+            voadeiras: voadeiras.count,
+            rabetas: rabetas.count,
         })
     }
 }
