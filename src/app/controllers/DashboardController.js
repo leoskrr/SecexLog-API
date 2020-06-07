@@ -5,9 +5,11 @@ const { Modal, City, Opinion } = require("../models");
 const Operation = Sequelize.Op;
 
 async function getFeedbacksOfSystem(){
-    const feedbacks = await Opinion.findAll({
-        attributes: ['titulo','desc']
+    var feedbacks = await Opinion.findAll({
+        attributes: ['desc']
     });
+
+    feedbacks = feedbacks.map(feedback => feedback['desc']);
 
     return feedbacks;
 }
@@ -17,7 +19,9 @@ async function getFeedbackOfCities(){
         attributes: ['nome','obsCidade', 'obsInterdicao']
     });
 
-    return feedbacks;
+    var obsCities = await feedbacks.filter((feedback) => feedback.obsCidade !== null || feedback.obsInterdicao !== null)
+
+    return obsCities;
 }
 
 async function getFeedbacks(){ 
